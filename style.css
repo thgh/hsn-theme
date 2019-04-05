@@ -473,39 +473,6 @@ body {
 	/* Fallback for when there is no custom background color defined. */
 }
 
-hr {
-	background-color: #ccc;
-	border: 0;
-	height: 1px;
-	margin-bottom: 1.5em;
-}
-
-ul, ol {
-	margin: 0 0 1.5em 3em;
-}
-
-ul {
-	list-style: disc;
-}
-
-ol {
-	list-style: decimal;
-}
-
-li > ul,
-li > ol {
-	margin-bottom: 0;
-	margin-left: 1.5em;
-}
-
-dt {
-	font-weight: bold;
-}
-
-dd {
-	margin: 0 1.5em 1.5em;
-}
-
 img {
 	height: auto;
 	/* Make sure images are scaled correctly. */
@@ -982,4 +949,21 @@ object {
 
 .gallery-caption {
 	display: block;
+}
+
+/* HSN Custom */
+
+.site-header {
+	background: #202c4c;
+	color: white;
+}
+
+.site-title {
+	padding: 1em 0;
+	margin: 0;
+}
+
+
+.site-title>a {
+	color: inherit;
 }
