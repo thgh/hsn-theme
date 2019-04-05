@@ -28,7 +28,18 @@ function cptui_register_my_cpts_bijdrage() {
     "rewrite" => array( "slug" => "bijdrage", "with_front" => true ),
     "query_var" => true,
     "supports" => array( "title", "editor", "thumbnail" ),
-    "taxonomies" => array( "domein", "doelgroep", "thema" ),
+    "taxonomies" => [
+      'aantal respondenten',
+      'doelgroep',
+      'domein',
+      'land',
+      'leeftijd',
+      'dataverzameling',
+      'onderwijstype',
+      'respondenten',
+      'tekstsoort',
+      'thema',
+    ],
   );
 
   register_post_type( "bijdrage", $args );
