@@ -6,7 +6,6 @@
  *
  * @package hsn-theme
  */
-error_reporting(E_ALL);
 
 get_header();
 ?>
@@ -68,9 +67,9 @@ get_header();
 
 foreach ($taxonomyNames as $taxonomy) {
   // $t = (array) get_taxonomy( $taxonomy );
-  $terms = get_object_term_cache( $post->ID, $taxonomy);
+  $terms = get_object_term_cache( get_post(), $taxonomy);
   if ( false === $terms ) {
-    $terms = wp_get_object_terms( $post->ID, $taxonomy);
+    $terms = wp_get_object_terms( get_post(), $taxonomy);
   }
   foreach ( $terms as $term ) {
     $taxonomies[$term->taxonomy][] = [
