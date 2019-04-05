@@ -67,9 +67,9 @@ get_header();
 
 foreach ($taxonomyNames as $taxonomy) {
   // $t = (array) get_taxonomy( $taxonomy );
-  $terms = get_object_term_cache( get_post(), $taxonomy);
+  $terms = get_object_term_cache( get_post()->ID, $taxonomy);
   if ( false === $terms ) {
-    $terms = wp_get_object_terms( get_post(), $taxonomy);
+    $terms = wp_get_object_terms( get_post()->ID, $taxonomy);
   }
   foreach ( $terms as $term ) {
     $taxonomies[$term->taxonomy][] = [
