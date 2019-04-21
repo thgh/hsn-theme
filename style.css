@@ -41,6 +41,40 @@ Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 	## Captions
 	## Galleries
 --------------------------------------------------------------*/
+
+
+@font-face {
+  font-family: 'Kievit';
+  src: url("./font/kievitot-regular-webfont.eot");
+  src: url("./font/kievitot-regular-webfont.eot?#iefix") format("embedded-opentype"), url("./font/kievitot-regular-webfont.woff") format("woff"), url("./font/kievitot-regular-webfont.ttf") format("truetype"), url("./font/kievitot-regular-webfont.svg#kievitot-regularregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'Kievit';
+  src: url("./font/kievitot-bold-webfont.eot");
+  src: url("./font/kievitot-bold-webfont.eot?#iefix") format("embedded-opentype"), url("./font/kievitot-bold-webfont.woff") format("woff"), url("./font/kievitot-bold-webfont.ttf") format("truetype"), url("./font/kievitot-bold-webfont.svg#kievit_otbold") format("svg");
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: 'Kievit';
+  src: url("./font/kievitscoffc-ita-webfont.eot");
+  src: url("./font/kievitscoffc-ita-webfont.eot?#iefix") format("embedded-opentype"), url("./font/kievitscoffc-ita-webfont.woff") format("woff"), url("./font/kievitscoffc-ita-webfont.ttf") format("truetype"), url("./font/kievitscoffc-ita-webfont.svg#kievit_sc_offcitalic") format("svg");
+  font-weight: normal;
+  font-style: italic; }
+@font-face {
+  font-family: 'Kievit Bold Italic';
+  src: url("./font/kievitot-bolditalic-webfont.eot");
+  src: url("./font/kievitot-bolditalic-webfont.eot?#iefix") format("embedded-opentype"), url("./font/kievitot-bolditalic-webfont.woff") format("woff"), url("./font/kievitot-bolditalic-webfont.ttf") format("truetype"), url("./font/kievitot-bolditalic-webfont.svg#kievit_otbold_italic") format("svg");
+  font-weight: bold;
+  font-style: italic; }
+@font-face {
+  font-family: 'Kievit Slab';
+  src: url("./font/KievitSlabWeb.eot?") format("eot"), url("./font/KievitSlabWeb.woff") format("woff"), url("./font/KievitSlabWeb.ttf") format("truetype"); }
+@font-face {
+  font-family: 'Kievit Slab Small Caps';
+  src: url("./font/KievitSlabScWeb.eot?") format("eot"), url("./font/KievitSlabScWeb.woff") format("woff"), url("./font/KievitSlabScWeb.ttf") format("truetype"); }
+
+
 /*--------------------------------------------------------------
 # Normalize
 --------------------------------------------------------------*/
@@ -396,7 +430,7 @@ select,
 optgroup,
 textarea {
 	color: #404040;
-	font-family: sans-serif;
+	font-family: "Kievit", sans-serif;
 	font-size: 16px;
 	font-size: 1rem;
 	line-height: 1.5;
@@ -581,15 +615,15 @@ textarea {
 ## Links
 --------------------------------------------------------------*/
 a {
-	color: royalblue;
+	color: #24aac5;
 }
 
 a:visited {
-	color: purple;
+	color: #202c4c;
 }
 
 a:hover, a:focus, a:active {
-	color: midnightblue;
+	color: #202c4c;
 }
 
 a:focus {
@@ -954,16 +988,253 @@ object {
 /* HSN Custom */
 
 .site-header {
+	padding: 10px 0;
 	background: #202c4c;
 	color: white;
 }
 
 .site-title {
-	padding: 1em 0;
 	margin: 0;
+	width: 80px;
+	height: 45px;
+	background-image: url(img/logo_nu-white.png);
+	background-size: 100%;
+	overflow: hidden;
 }
 
 
 .site-title>a {
-	color: inherit;
+	display: block;
+	line-height: 45px;
+  text-indent: 120px;
+}
+
+h2 {
+	margin: 2em 0;
+	font-size: 1rem;
+}
+
+.site-content {
+	min-height: calc(100vh - 50px);
+}
+
+.site-footer {
+	padding: 2em 0;
+	background: #202c4c;
+	color: white;
+}
+
+/* Breadcrumb */
+
+.breadcrumb {
+	background: none;
+}
+
+/* Bundel-mini */
+
+.bundel-minis {
+	overflow: auto;
+	margin: -.5em -.5em 0;
+}
+
+.bundel-mini {
+	position: relative;
+	display: inline-block;
+	margin: .5em;
+	width: 150px;
+	height: 224px;
+	background: #eee;
+	overflow: hidden;
+	background-size: cover;
+	background-position: center;
+	transition: box-shadow .2s;
+}
+
+.bundel-mini:hover,
+.bundel-mini:focus {
+	box-shadow: 0 0 0 3px #212d4c;
+}
+
+.bundel-mini__year {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 0 .6em 0;
+	line-height: 1.6em;
+	background: #fff;
+	color: #212d4c;
+}
+
+.bundel-mini__num {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0 .6em 0;
+	line-height: 1.6em;
+	background: #212d4c;
+	color: white;
+}
+
+.bundel-mini .entry-title>a {
+	display: block;
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	opacity: .2;
+	transition: background .2s;
+}
+.bundel-mini:hover .entry-title>a {
+	background-color: #fff;
+}
+.hidden {
+	display: none;
+}
+
+/* Taxonomies */
+
+.taxonomies {
+	font-size: 14px;
+	user-select: none;
+}
+
+.taxonomy__name {
+	position: relative;
+	display: block;
+	margin: 0;
+	padding: .75em 1em;
+	line-height: 1em;
+	font-size: 1em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background: #24aac5;
+	color: white;
+}
+.taxonomy__name:hover {
+	background: #24aac5ee;
+}
+.taxonomy__arrow {
+	position: absolute;
+	top: .5em;
+	right: .5em;
+	bottom:.5em;
+	display: block;
+	height: 1.5em;
+	width: 1.5em;
+	transition: transform .2s, fill .2s;
+}
+.taxonomy__arrow--open {
+	transform: rotate(180deg);
+}
+.term {
+	position: relative;
+}
+.subterm-toggle {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	font-size: 1em;
+	line-height: 1.5em;
+	border: 0;
+	border-radius: 0;
+	padding: .5em;
+	width: 2.5em;
+	height: 2.5em;
+	background: #f0f0f0;
+	outline: none;
+}
+.subterm-toggle:hover {
+	background: #ddd;
+}
+.subterm-toggle:focus {
+	outline: none;
+}
+.term__check {
+	position: absolute;
+	left: 0;
+	top: 0;
+	line-height: 2.5em;
+	height: 2.5em;
+	width: 2.5em;
+	text-align: center;
+}
+.term__name {
+	display: block;
+	margin: 0;
+	padding: .75em .5em .75em 2.5em;
+	line-height: 1em;
+	font-size: 1em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	background: #f0f0f0;
+	color: #24aac5;
+}
+.term__name:hover {
+	background: #ddd;
+}
+.term--sub .term__name {
+	padding-left: 3.5em;
+	padding-right: 2.5em;
+}
+.term--sub .term__check {
+	left: 1em;
+}
+.term__arrow {
+	position: absolute;
+	top: .5em;
+	right: .5em;
+	bottom:.5em;
+	display: block;
+	height: 1.5em;
+	width: 1.5em;
+	transition: transform .2s, fill .2s;
+}
+.term__arrow--open {
+	transform: rotate(180deg);
+}
+.term:hover .term__arrow path {
+	fill: black;
+}
+
+/* widget area*/
+
+.widget-area--search form:focus-within {
+  box-shadow: 0 0 0 0.2rem rgba(80,90,200,.25);
+}
+.widget-area--search label {
+	float: left;
+	box-sizing: border-box;
+	width: calc(100% - 44px);
+}
+.widget-area--search [type=search] {
+	display: block;
+	border: none;
+	border-radius: 0;
+	padding-left: .5em;
+	width: 100%;
+	border: 1px solid #212d4c;
+	height: 44px;
+	line-height: 44px;
+}
+.widget-area--search [type=search]:focus {
+  outline: 0;
+}
+.widget-area--search [type=submit] {
+	border: none;
+	border-radius: 0;
+	padding: 0;
+	background: #212d4c;
+	color: white;
+	width: 44px;
+	height: 44px;
+  outline: 0;
+}
+
+[v-cloak] {
+	display: none;
 }
