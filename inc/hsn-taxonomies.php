@@ -142,8 +142,8 @@ class taxonomies_terms
         $output = 'names'; // or objects
         $operator = 'or'; // 'and' or 'or'
         $taxonomies = get_taxonomies();
-        foreach ($taxonomies as $key => $taxonomy_name) {
-            $allTerms = get_terms($taxonomy_name);
+        foreach ($taxonomies as $key => $taxonomy_key) {
+            $allTerms = get_terms($taxonomy_key);
             // $terms = $allTerms;
             $terms = array_filter($allTerms, function ($a) {
               return empty($a->parent);
@@ -154,7 +154,7 @@ class taxonomies_terms
               }));
             }
             $return[] = [
-              'name' => $taxonomy_name,
+              'key' => $taxonomy_key,
               'terms' => array_values($terms),
             ];
         }

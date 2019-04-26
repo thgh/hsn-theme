@@ -13,5 +13,11 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 ?>
 
 <aside id="secondary" class="widget-area widget-area--search">
-  <?php dynamic_sidebar( 'sidebar-1' ); ?>
+  <section id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="http://hsn.test/">
+    <label>
+      <span class="screen-reader-text">Zoeken naar:</span>
+      <input type="search" class="search-field" placeholder="Zoeken..." value="" name="s" v-model="filter.search" @focus="onFocus">
+    </label>
+    <input type="submit" class="search-submit" value="Zoeken">
+  </form></section>
 </aside><!-- #secondary -->

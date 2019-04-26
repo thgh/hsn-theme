@@ -8,49 +8,25 @@
  */
 
 get_header();
+$parent = get_post($post->post_parent);
 ?>
+<div class="breadcrumb-border">
   <nav class="container" aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Bundels</a></li>
-      <li class="breadcrumb-item"><a href="#">28ste</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Artikelnaam</li>
+      <li class="breadcrumb-item"><a href="<?php echo get_home_url() ?>">Alle bundels</a></li>
+      <li class="breadcrumb-item"><a href="<?php echo get_permalink($parent) ?>"><?php echo $parent->post_title ?></a></li>
+      <li class="breadcrumb-item active" aria-current="page"><?php echo $post->post_title ?></li>
     </ol>
   </nav>
+</div>
 
   <div id="primary" class="content-area">
     <main id="main" class="site-main container">
       <div class="row">
         <div class="col-12 col-md-3">
           <h2>Labels</h2>
-          <dl>
-            <dt>Domein</dt>
-            <dd>mondelinge taalvaardigheid</dd>
-            <dd>spreken</dd>
+          <dl class="labels">
           <?php
-// $taxonomyNames =get_object_taxonomies(get_post());
-// $taxonomies = [];
-// foreach ($taxonomyNames as $taxonomy) {
-//   $t = (array) get_taxonomy( $taxonomy );
-//   if ( empty( $t['label'] ) ) {
-//           $t['label'] = $taxonomy;
-//   }
-//   if ( empty( $t['args'] ) ) {
-//           $t['args'] = array();
-//   }
-  
-//   if ( false === $terms ) {
-//     $terms = wp_get_object_terms( $post->ID, $taxonomy, $t['args'] );
-//   }
-//   foreach ( $terms as $term ) {
-//     var_dump($terms);
-//     $taxonomies[$t['label']][] = [
-//       'group' => $t['label'],
-//       'link' => esc_attr(get_term_link($term)),
-//       'name' => $term,
-//     ];
-//   }
-// }
-
   $taxonomyNames = [
     'aantal_respondenten',
     'doelgroep',
@@ -79,7 +55,6 @@ foreach ($taxonomyNames as $taxonomy) {
     ];
   }
 }
-echo '</pre>';
 foreach ($taxonomies as $taxonomy => $terms) {
   echo '<dt>' . $taxonomy . '</dt>';
   if (is_array($terms)) {
@@ -102,12 +77,6 @@ foreach ($taxonomies as $taxonomy => $terms) {
             get_template_part( 'template-parts/content', get_post_type() );
 
             the_post_navigation();
-
-            // If comments are open or we have at least one comment, load up the comment template.
-            if ( comments_open() || get_comments_number() ) :
-              comments_template();
-            endif;
-
           endwhile; // End of the loop.
           ?>
         </div>
@@ -117,5 +86,4 @@ foreach ($taxonomies as $taxonomy => $terms) {
   </div><!-- #primary -->
 
 <?php
-get_sidebar();
 get_footer();

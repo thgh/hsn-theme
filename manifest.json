@@ -1,0 +1,15 @@
+{
+  "background_color": "#212d4c",
+  "theme_color": "#24aac5",
+  "name": "HSN bundels",
+  "short_name": "HSN",
+  "display": "minimal-ui",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "img/favicon-460.png",
+      "sizes": "460x460",
+      "type": "image/png"
+    }
+  ]
+}

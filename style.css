@@ -619,7 +619,7 @@ a {
 }
 
 a:visited {
-	color: #202c4c;
+	color: #279;
 }
 
 a:hover, a:focus, a:active {
@@ -1027,7 +1027,17 @@ h2 {
 /* Breadcrumb */
 
 .breadcrumb {
+	margin: 12px 0;
+	padding: 0;
 	background: none;
+}
+.breadcrumb li {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.breadcrumb-border {
+	border-bottom: 1px solid #eee;
 }
 
 /* Bundel-mini */
@@ -1093,11 +1103,24 @@ h2 {
 	display: none;
 }
 
+.single-bijdrage .entry-title {
+	font-weight: bold;
+}
+
 /* Taxonomies */
 
 .taxonomies {
+	margin-top: 1.5em;
 	font-size: 14px;
 	user-select: none;
+}
+@media screen and (max-width: 768px) {
+	.taxonomies {
+		display: none;
+	}
+	.searchFocus {
+		display: block;
+	}
 }
 
 .taxonomy__name {
@@ -1201,8 +1224,44 @@ h2 {
 	fill: black;
 }
 
+/* */
+
+.h2-md {
+	margin-top: 2em;
+}
+
+/* search results */
+
+.results {
+	margin-bottom: 3em;
+}
+.result {
+	display: block;
+	margin: 0 0 1px;
+	padding: 1em 1em;
+	background: #f0f0f0;
+	color: #212d4c;
+}
+.result:hover {
+	text-decoration: none;
+	background: white;
+}
+.result h3 {
+	margin: 0 0 .2em;
+	font-size: 14px;
+	font-weight: bold;
+}
+.result p {
+	margin: 0;
+	font-size: 14px;
+}
+
 /* widget area*/
 
+.widget_search,
+.widget_search label{
+	margin: 0;
+}
 .widget-area--search form:focus-within {
   box-shadow: 0 0 0 0.2rem rgba(80,90,200,.25);
 }
@@ -1234,6 +1293,40 @@ h2 {
 	height: 44px;
   outline: 0;
 }
+
+/* Detail > labels */
+
+.labels {
+	overflow: hidden;
+}
+.labels dt {
+	display: block;
+	margin: 0;
+	border: 1px solid #f1f2f3;
+	padding: 5px 8px 3px;
+	line-height: 24px;
+}
+.labels dd {
+	display: block;
+	margin: 0;
+	padding: 7px;
+	font-size: 14px;
+	line-height: 24px;
+	background: #f1f2f3;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.labels dd::before {
+	content: '>';
+	float: left;
+	padding: 0 8px 0 3px;
+	font-size: 21px;
+	line-height: 24px;
+	color: #24aac5;
+}
+
+/* Vue */
 
 [v-cloak] {
 	display: none;

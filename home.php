@@ -17,83 +17,12 @@ get_header();
   <div id="primary" class="content-area">
     <main id="main" class="site-main container">
       <div class="row">
-        <div class="col-12 col-md-3">
-          <h2>Filters</h2>
+        <div class="col-12 col-md-4 col-lg-3 h2-md">
+          <h2 class="d-none d-md-block pt-0 mt-0">Filters</h2>
 
           <?php get_sidebar('search'); ?>
-<!--           <dl>
-            <dt>Domein</dt>
-            <dd>mondelinge taalvaardigheid</dd>
-            <dd>spreken</dd> -->
-          <?php
-            // $taxonomyNames =get_object_taxonomies(get_post());
-            // $taxonomies = [];
-            // foreach ($taxonomyNames as $taxonomy) {
-            //   $t = (array) get_taxonomy( $taxonomy );
-            //   if ( empty( $t['label'] ) ) {
-            //           $t['label'] = $taxonomy;
-            //   }
-            //   if ( empty( $t['args'] ) ) {
-            //           $t['args'] = array();
-            //   }
-              
-            //   if ( false === $terms ) {
-            //     $terms = wp_get_object_terms( $post->ID, $taxonomy, $t['args'] );
-            //   }
-            //   foreach ( $terms as $term ) {
-            //     var_dump($terms);
-            //     $taxonomies[$t['label']][] = [
-            //       'group' => $t['label'],
-            //       'link' => esc_attr(get_term_link($term)),
-            //       'name' => $term,
-            //     ];
-            //   }
-            // }
 
-            //   $taxonomyNames = [
-            //     'aantal_respondenten',
-            //     'doelgroep',
-            //     'domein',
-            //     'land',
-            //     'leeftijd',
-            //     'dataverzameling',
-            //     'onderwijstype',
-            //     'respondenten',
-            //     'tekstsoort',
-            //     'thema',
-            //   ];
-
-
-            // foreach ($taxonomyNames as $taxonomy) {
-            //   // $t = (array) get_taxonomy( $taxonomy );
-            //   $terms = get_object_term_cache( get_post()->ID, $taxonomy);
-            //   if ( false === $terms ) {
-            //     $terms = wp_get_object_terms( get_post()->ID, $taxonomy);
-            //   }
-            //   foreach ( $terms as $term ) {
-            //     $taxonomies[$term->taxonomy][] = [
-            //       'group' => $term->taxonomy,
-            //       'link' => esc_attr(get_term_link($term)),
-            //       'name' => $term,
-            //     ];
-            //   }
-            // }
-            // echo '</pre>';
-            // foreach ($taxonomies as $taxonomy => $terms) {
-            //   echo '<dt>' . $taxonomy . '</dt>';
-            //   if (is_array($terms)) {
-            //     foreach ($terms as $term) {
-            //       echo '<dd>' . $term['name']->name . '</dd>';
-            //     }
-            //   } else {
-            //     var_dump($terms);
-            //   }
-
-            // }
-          ?>
-          </dl>
-        
-          <div class="taxonomies" v-cloak>
+          <div class="taxonomies" :class="{ searchFocus: searchFocus }" v-cloak>
             <div class="taxonomy" v-for="taxonomy in lookup" v-if="taxonomy.terms.length">
               <label class="taxonomy__name">
                 <input type="checkbox" v-model="taxonomy.open" style="display: none;">
@@ -121,10 +50,12 @@ get_header();
               </div>
             </div>
           </div>
-          <script></script>
+          <div class="d-block d-md-none" v-if="searchFocus">
+            <button @click.prevent="searchFocus = !searchFocus">{{ searchFocus ? 'Filters inklappen' : 'Filters uitklappen' }}</button>
+          </div>
         </div>
-        <div class="col-12 col-md-9">
-          <h2>Recente bundels</h2>
+        <div v-if="!filtering" class="col-12 col-md-8 col-lg-9 h2-md">
+          <h2 class="d-none d-md-block pt-0 mt-0">Recente bundels</h2>
           <div class="bundel-minis">
             <?php
             $wp_query = new WP_Query( [ 'post_type' => 'bundel', 'posts_per_page' => 50] );
@@ -137,6 +68,17 @@ get_header();
               $lazycount++;
             endwhile; // End of the loop.
             ?>
+          </div>
+        </div>
+        <div v-else v-cloak class="col-12 col-md-8 col-lg-9 h2-md">
+          <h2 class="d-none d-md-block pt-0 mt-0">Zoekresultaten {{ articles.length ? '(' + articles.total + ')' : '' }}</h2>
+          <div class="results">
+            <a :href="article.link" class="result" v-for="article in articles">
+              <article>
+                <h3 v-html="article.title.rendered"></h3>
+                <p>Auteur</p>
+              </article>
+            </a>
           </div>
         </div>
       </div>
