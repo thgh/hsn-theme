@@ -36,7 +36,9 @@
           'posts_per_page'   => 100,
           'post_type'        => 'bijdrage',
           'post_parent'      => $post->ID,
-          'meta_key' => ''
+          'meta_key'         => 'page_first',
+          'order'            => 'ASC',
+          'orderby'          => 'meta_value_num',
         ]);
 
         if ( $articles->have_posts() ) : ?>
