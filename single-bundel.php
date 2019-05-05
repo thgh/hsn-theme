@@ -9,7 +9,15 @@
 
 get_header();
 ?>
-bundel
+  <div class="breadcrumb-border">
+    <nav class="container" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="<?php echo get_home_url() ?>">Alle bundels</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><?php echo $post->post_title ?></li>
+      </ol>
+    </nav>
+  </div>
+
   <div id="primary" class="content-area">
     <main id="main" class="site-main container">
 
@@ -18,12 +26,6 @@ bundel
       the_post();
 
       get_template_part( 'template-parts/content', get_post_type() );
-?>
-<br><br>
-Vorige volgende:
-<?php
-      the_post_navigation();
-
     endwhile; // End of the loop.
     ?>
 

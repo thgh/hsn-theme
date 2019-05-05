@@ -50,7 +50,7 @@ get_header();
               </div>
             </div>
           </div>
-          <div class="d-block d-md-none" v-if="searchFocus">
+          <div class="d-block d-md-none" v-if="searchFocus" v-cloak>
             <button @click.prevent="searchFocus = !searchFocus">{{ searchFocus ? 'Filters inklappen' : 'Filters uitklappen' }}</button>
           </div>
         </div>
@@ -64,7 +64,10 @@ get_header();
             while ( have_posts() ) :
               the_post();
 
+              echo '<div class="col">';
               get_template_part( 'template-parts/bundel-mini', get_post_type() );
+              echo '</div>';
+
               $lazycount++;
             endwhile; // End of the loop.
             ?>
@@ -73,13 +76,18 @@ get_header();
         <div v-else v-cloak class="col-12 col-md-8 col-lg-9 h2-md">
           <h2 class="d-none d-md-block pt-0 mt-0">Zoekresultaten {{ articles.length ? '(' + articles.total + ')' : '' }}</h2>
           <div class="results">
-            <a :href="article.link" class="result" v-for="article in articles">
-              <article>
+            <a :href="article.link" class="text-decoration-none" v-for="article in articles">
+              <article class="article-mini">
+                <span class="article-mini__num">{{ article.page_first || '' }}</span>
                 <h3 v-html="article.title.rendered"></h3>
-                <p>Auteur</p>
+                <p>{{ article.auteur || '' }}</p>
               </article>
             </a>
           </div>
+
+<!--           <p>
+            <button class="btn btn-secondary">Toon meer resultaten</button>
+          </p> -->
         </div>
       </div>
 

@@ -16,23 +16,25 @@ if (has_post_thumbnail( $post->ID ) ) {
 }
 $year = substr($post->post_date, 0, 4);
 ?>
-<article id="post-<?php the_ID(); ?>" <?php post_class('bundel-mini'); ?> style="background-image: <?php echo $image ? 'url('. $image .')' : 'none'; ?>">
-  <div class="bundel-mini__num"><?php echo $number ?></div>
-  <div class="bundel-mini__year"><?php echo $year ?></div>
-  <header class="entry-header">
-    <?php
-    the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark"><span class="hidden">', '</span></a></h2>' );
-    ?>
-  </header><!-- .entry-header -->
+<div class="cover">
+  <article id="post-<?php the_ID(); ?>" <?php post_class('bundel-mini'); ?> style="background-image: <?php echo $image ? 'url('. $image .')' : 'none'; ?>">
+    <div class="bundel-mini__num"><?php echo $number ?></div>
+    <div class="bundel-mini__year"><?php echo $year ?></div>
+    <header class="entry-header">
+      <?php
+      the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark"><span class="hidden">', '</span></a></h2>' );
+      ?>
+    </header><!-- .entry-header -->
 
-  <div class="entry-content">
+    <div class="entry-content">
 
 
-    <?php
-    wp_link_pages( array(
-      'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'hsn-theme' ),
-      'after'  => '</div>',
-    ) );
-    ?>
-  </div><!-- .entry-content -->
-</article><!-- #post-<?php the_ID(); ?> -->
+      <?php
+      wp_link_pages( array(
+        'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'hsn-theme' ),
+        'after'  => '</div>',
+      ) );
+      ?>
+    </div><!-- .entry-content -->
+  </article><!-- #post-<?php the_ID(); ?> -->
+</div>

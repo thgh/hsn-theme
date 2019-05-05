@@ -705,22 +705,19 @@ a:hover, a:active {
 }
 
 .site-main .comment-navigation, .site-main
-.posts-navigation, .site-main
-.post-navigation {
+.posts-navigation{
 	margin: 0 0 1.5em;
 	overflow: hidden;
 }
 
 .comment-navigation .nav-previous,
-.posts-navigation .nav-previous,
-.post-navigation .nav-previous {
+.posts-navigation .nav-previous {
 	float: left;
 	width: 50%;
 }
 
 .comment-navigation .nav-next,
-.posts-navigation .nav-next,
-.post-navigation .nav-next {
+.posts-navigation .nav-next {
 	float: right;
 	text-align: right;
 	width: 50%;
@@ -1042,17 +1039,41 @@ h2 {
 
 /* Bundel-mini */
 
+.cover {
+  position: relative;
+  padding-bottom: 149.333%;
+  height: 0; 
+}
+ 
+.cover>.bundel-mini {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .bundel-minis {
 	overflow: auto;
 	margin: -.5em -.5em 0;
 }
+.bundel-minis .col {
+	padding: .5em;
+	float: left;
+	width: 50%;
+}
+@media screen and (min-width: 400px) {
+	.bundel-minis .col {
+		width: 33.333%;
+	}
+}
+@media screen and (min-width: 992px) {
+	.bundel-minis .col {
+		width: 25%;
+	}
+}
 
 .bundel-mini {
-	position: relative;
-	display: inline-block;
-	margin: .5em;
-	width: 150px;
-	height: 224px;
 	background: #eee;
 	overflow: hidden;
 	background-size: cover;
@@ -1060,8 +1081,8 @@ h2 {
 	transition: box-shadow .2s;
 }
 
-.bundel-mini:hover,
-.bundel-mini:focus {
+a .bundel-mini:hover,
+a .bundel-mini:focus {
 	box-shadow: 0 0 0 3px #212d4c;
 }
 
@@ -1105,6 +1126,145 @@ h2 {
 
 .single-bijdrage .entry-title {
 	font-weight: bold;
+}
+
+/* Bundle detail */
+
+.single-bundel .entry-title {
+	font-weight: bold;
+}
+.thumbnail-placeholder {
+	height: 300px;
+	width: 100%;
+	background: #eee;
+}
+@media (max-width: 500px) {
+	
+.bundel-thumbnail {
+	float: left
+}
+}
+
+/* Bundle detail > download pdf */
+
+.download-pdf {
+	position: relative;
+	display: inline-block;
+	margin: 0 0 1em;
+  border: solid 1px #eee;
+  padding: .5em 1em .5em 2.5em;
+  line-height: 1.5em;
+  font-size: 14px;
+  color: #202c4c;
+}
+.download-pdf::before {
+	content: url(img/pdf-box.svg);
+	display: block;
+	position: absolute;
+	left: .25em;
+	top: .25em;
+	bottom: .25em;
+	width: 2em;
+	height: 2em;
+}
+
+/* Bundle detail > article excerpt */
+
+.text-decoration-none,
+.text-decoration-none:hover {
+	text-decoration: none;
+}
+.article-mini {
+	margin: 1px 0;
+	padding: .75em  .75em  .75em 1em;
+	background-color: rgba(240, 240, 240, 0.5);
+}
+.article-mini:hover {
+	background: white;
+}
+.article-mini h3 {
+	margin: 0 0;
+	line-height: 1.5em;
+	font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #202c4c;
+  clear: none;
+}
+.article-mini p {
+	margin: 0 0;
+	line-height: 1.5em;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #56af89;
+}
+.article-mini__num {
+	float: right;
+	border-radius: 1px;
+	padding: 4px 8px;
+  min-width: 32px;
+  height: 28px;
+  line-height: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+	text-align: center;
+  background-color: #ffffff;
+  color: #56af89;
+}
+
+/* Bundel detail > next-prev */
+
+.post-navigation {
+	margin: 1.5em auto;
+	text-align: center;
+}
+
+.post-navigation a {
+	display: block;
+	border: 1px solid #eee;
+	padding: 1em;
+	line-height: 1em;
+	color: #56af89;
+}
+
+.post-navigation a:hover {
+	text-decoration: none;
+	position: relative;
+	z-index: 1;
+	color: #202c4c;
+	border-color: #202c4c;
+}
+
+.post-navigation .nav-previous,
+.post-navigation .nav-next {
+	display: inline-block;
+	margin-bottom: -1px;
+}
+
+.post-navigation .nav-previous + .nav-next {
+	margin-left: -1px;
+}
+
+.post-navigation .nav-previous>a::before {
+	content: '\2190';
+	vertical-align: bottom;
+	line-height: .9em;
+	padding-right: .5em;
+}
+.post-navigation .nav-next>a::after {
+	content: '\2192';
+	vertical-align: bottom;
+	line-height: .9em;
+	padding-left: .5em;
 }
 
 /* Taxonomies */
@@ -1235,26 +1395,6 @@ h2 {
 .results {
 	margin-bottom: 3em;
 }
-.result {
-	display: block;
-	margin: 0 0 1px;
-	padding: 1em 1em;
-	background: #f0f0f0;
-	color: #212d4c;
-}
-.result:hover {
-	text-decoration: none;
-	background: white;
-}
-.result h3 {
-	margin: 0 0 .2em;
-	font-size: 14px;
-	font-weight: bold;
-}
-.result p {
-	margin: 0;
-	font-size: 14px;
-}
 
 /* widget area*/
 
@@ -1328,6 +1468,7 @@ h2 {
 
 /* Vue */
 
+.main-navigation,
 [v-cloak] {
-	display: none;
+	display: none!important;
 }
