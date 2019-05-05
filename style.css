@@ -1466,6 +1466,66 @@ a .bundel-mini:focus {
 	color: #24aac5;
 }
 
+/* Article detail > pdf */
+
+.textual {
+	position: relative;
+	background: #fff;
+	padding: 1em;
+	margin: 2em 0; 
+	border:  2px solid #212d4c;
+	border-width: 1px 1px 2px;
+	line-height: 1.5em;
+}
+.textual p {
+	margin: .5em 0!important;
+}
+.textual__num {
+	float: right;
+}
+.textual__toggle {
+	position: absolute;
+	top: -2em;
+	right: -.5em;
+	font-size: 14px;
+	display: none;
+}
+.textual:hover .textual__toggle {
+	display: block;
+}
+.textual__toggle button {
+	display: inline-block;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	padding: 0 .5em;
+	font:inherit;
+	line-height: 2.5em;
+	box-sizing: border-box;
+	opacity: .5;
+	cursor: pointer;
+}
+.textual__toggle button + button {
+	margin-left: -1px;
+}
+.textual__toggle button:hover {
+	opacity: 1;
+}
+.textual__toggle button:focus {
+	outline: none;
+}
+.textual__toggle button.active {
+	text-decoration: underline;
+	opacity: .5;
+	cursor: inherit;
+}
+
+@media screen and (min-width: 768px) {
+	.textual {
+		padding: 2em;
+	}
+}
+
 /* Vue */
 
 .main-navigation,
