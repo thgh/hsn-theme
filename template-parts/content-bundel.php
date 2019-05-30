@@ -6,6 +6,10 @@
  *
  * @package hsn-theme
  */
+$pdfId = get_post_meta($post->ID, 'pdf', true);
+if (!empty($pdfId)) {
+  $pdf = get_post($pdfId);
+}
 
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -25,10 +29,19 @@
         endif;
         ?>
       </header><!-- .entry-header -->
-        
+      
       <div class="entry-content">
-        <a class="download-pdf" href="/.pdf"><b>Download bundel</b> (PDF)</a>
+        <?php if (isset($pdf)): ?>
+          <a class="download-pdf" href="<?php echo $pdf->guid; ?>"><b>Download bundel</b> (PDF)</a>
+        <?php else: ?>
+          PDF download is niet beschikbaar
+        <?php endif ?>
       </div><!-- .entry-content -->
+
+      <footer class="entry-footer">
+        <?php hsn_theme_entry_footer(); ?>
+
+      </footer><!-- .entry-footer -->
 
       <div class="articles">
         <?php
@@ -63,15 +76,17 @@
           <?php wp_reset_postdata(); ?>
 
         <?php else : ?>
-          <p><?php esc_html_e( 'De bijdrages in deze bundel zijn niet beschikbaar.' ); ?></p>
+          <p><?php esc_html_e( 'De bijdrages in deze bundel zijn niet afzonderlijk beschikbaar.' ); ?></p>
+          <?php if (isset($pdf)): ?>
+            <div class="embed-container embed-pdf">
+              <embed class="iframe-pdf" src="<?php echo $pdf->guid; ?>" type="application/pdf">
+            </div>
+          <?php endif; ?>
         <?php endif; ?>
       </div>
-
-      <footer class="entry-footer">
-        <?php hsn_theme_entry_footer(); ?>
-
+      <div class="sticky-bottom">
         <?php the_post_navigation(); ?>
-      </footer><!-- .entry-footer -->
+      </div>
     </div>
   </div>
 </article><!-- #post-<?php the_ID(); ?> -->

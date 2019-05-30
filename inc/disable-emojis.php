@@ -1,5 +1,17 @@
 <?php
 
+// Remove menu items
+function remove_menus() {
+  remove_menu_page( 'index.php' );                  //Dashboard
+  remove_menu_page( 'jetpack' );                    //Jetpack* 
+  remove_menu_page( 'edit.php' );                   //Posts
+  remove_menu_page( 'edit.php?post_type=page' );    //Pages
+  remove_menu_page( 'edit-comments.php' );          //Comments
+}
+add_action( 'admin_menu', 'remove_menus' );
+
+// Below: disable emojis
+
 function clean_header(){ wp_deregister_script( 'comment-reply' ); }
 add_action('init','clean_header');
 
