@@ -13,11 +13,11 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 ?>
 
 <aside id="secondary" class="widget-area widget-area--search">
-  <section id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="http://hsn.test/">
+  <section id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="<?php echo get_home_url() ?>">
     <label>
       <span class="screen-reader-text">Zoeken naar:</span>
-      <input type="search" class="search-field" placeholder="Zoeken..." value="" name="s" v-model="filter.search" @focus="onFocus">
+      <input type="search" class="search-field" placeholder="Zoeken..." value="" name="q" v-model="filter.search" @focus="onFocus">
     </label>
-    <input type="submit" class="search-submit" value="Zoeken">
+    <button type="submit" class="search-submit" @click.prevent>Zoeken</button>
   </form></section>
 </aside><!-- #secondary -->

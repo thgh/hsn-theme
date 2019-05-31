@@ -15,9 +15,10 @@ if (has_post_thumbnail( $post->ID ) ) {
   $image = false;
 }
 $year = substr($post->post_date, 0, 4);
+$thumb = get_the_post_thumbnail_url($post->ID, [194, 290]);
 ?>
 <div class="cover">
-  <article id="post-<?php the_ID(); ?>" <?php post_class('bundel-mini'); ?> style="background-image: <?php echo $image ? 'url('. $image .')' : 'none'; ?>">
+  <article id="post-<?php the_ID(); ?>" <?php post_class('bundel-mini'); ?> style="background-image: <?php echo $thumb ? 'url('. $thumb .')' : 'none'; ?>">
     <div class="bundel-mini__num"><?php echo $number ?></div>
     <div class="bundel-mini__year"><?php echo $year ?></div>
     <header class="entry-header">

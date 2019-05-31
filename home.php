@@ -81,8 +81,12 @@ get_header();
                 <span class="article-mini__num">{{ article.page_first || '' }}</span>
                 <h3 v-html="article.title.rendered"></h3>
                 <p>{{ article.auteur || '' }}</p>
+                <p v-if="articles.length === 1"></p>
               </article>
             </a>
+          </div>
+          <div v-if="hasMore">
+            <button class="btn" @click="more">Toon meer resultaten</button>
           </div>
 
 <!--           <p>

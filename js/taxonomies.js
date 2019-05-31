@@ -4,19 +4,38 @@ Vue.config.devtools = false
 const app = new Vue({
   el: '#main',
   data() {
-    const { search } = unserialize(window.location.hash)
+    const filter = unserialize(window.location.hash)
     return {
       articles: [],
       lookup: {},
       searchFocus: false,
       filter: {
-        search: search || ''
+        category: '',
+        post_tag: '',
+        nav_menu: '',
+        link_category: '',
+        post_format: '',
+        aantal_respondenten: '',
+        doelgroep: '',
+        domein: '',
+        land: '',
+        leeftijd: '',
+        dataverzameling: '',
+        onderwijstype: '',
+        respondenten: '',
+        tekstsoort: '',
+        thema: '',
+        search: '',
+        ...filter
       }
     }
   },
   computed: {
-    filtering () {
+    filtering() {
       return serialize(this.filter)
+    },
+    hasMore() {
+      return this.articles.total > this.articles.length
     }
   },
   methods: {
@@ -29,44 +48,62 @@ const app = new Vue({
     },
     onFocus() {
       this.searchFocus = true
+    },
+    more() {
+      alert('todo')
     }
   },
   async mounted() {
-    this.search()
+    if (window.location.hash.length > 4) {
+      this.search()
+    }
     const d = await wpFetch('hsn-theme/bijdrage-taxonomies')
     if (!d || !d.forEach) {
       return console.warn('API error', d)
     }
+    const { filter } = this
     d.forEach(tax => {
-      tax.open = false
+      tax.open = filter[tax.key]
       tax.terms.forEach(term => {
         term.open = false
-        term.selected = false
+        term.selected = isSelected(term)
         if (term.terms && term.terms.length) {
           term.terms.forEach(sub => {
-            sub.selected = false
+            sub.selected = isSelected(sub)
+            if (sub.selected) {
+              term.open = true
+            }
           })
           term.subs = term.terms.length
         }
       })
     })
-    console.log('d', d)
     this.lookup = d
+
+    function isSelected(term) {
+      const val = filter[term.taxonomy]
+      return val && val.includes(term.term_id)
+    }
   },
   watch: {
     filter: {
       deep: true,
       handler(s, o) {
         this.search()
-        window.history.replaceState(this.filter, '', '#' + serialize(this.filter))
+        window.history.replaceState(
+          this.filter,
+          '',
+          '#' + serialize(this.filter)
+        )
       }
     },
     lookup: {
       deep: true,
-      handler (t) {
+      handler(t) {
         const params = {}
         t.forEach(tax => {
-          tax.name = tax.key.charAt(0).toUpperCase() + tax.key.slice(1).replace('_', ' ')
+          tax.name =
+            tax.key.charAt(0).toUpperCase() + tax.key.slice(1).replace('_', ' ')
           tax.terms.forEach(term => {
             if (term.selected) {
               include(term.taxonomy, term.term_id)
@@ -80,9 +117,12 @@ const app = new Vue({
             }
           })
         })
-        this.filter = Object.assign({
-          search: this.filter.search
-        }, params)
+        this.filter = Object.assign(
+          {
+            search: this.filter.search
+          },
+          params
+        )
         function include(taxonomy, term_id) {
           if (params[taxonomy]) {
             params[taxonomy] += ',' + term_id
@@ -97,10 +137,11 @@ const app = new Vue({
 
 function wpFetch(url) {
   let res
-  return fetch(window.restUrl + url).then(r => {
-    res = r
-    return r.json()
-  })
+  return fetch(window.restUrl + url)
+    .then(r => {
+      res = r
+      return r.json()
+    })
     .then(d => {
       if (d.code) {
         throw new Error('Fetch error: ' + d.code)
