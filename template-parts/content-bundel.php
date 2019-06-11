@@ -32,7 +32,7 @@ if (!empty($pdfId)) {
       
       <div class="entry-content">
         <?php if (isset($pdf)): ?>
-          <a class="download-pdf" href="<?php echo $pdf->guid; ?>"><b>Download bundel</b> (PDF)</a>
+          <a class="download-pdf" href="<?php echo $pdf->guid; ?>" download target="_blank"><b>Download bundel</b> (PDF)</a>
         <?php else: ?>
           PDF download is niet beschikbaar
         <?php endif ?>

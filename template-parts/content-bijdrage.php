@@ -85,7 +85,7 @@ if (count($pages) && isset($pdfUrl)) {
   // var_dump($page_last);
   ?>
     <p>
-      <button class="btn" onclick="togglePDF()">Toon originele PDF</button>
+      <button class="btn article-pdf-toggle" onclick="togglePDF()">Toon originele PDF</button>
     </p>
     <div class="article-pdf" data-url=<?php echo json_encode($pdfUrl) ?>></div>
   <?php
@@ -154,8 +154,10 @@ if (!$isScraped) {
     window.pdfToggle = !window.pdfToggle
     if (window.pdfToggle) {
       var url = $('.article-pdf').data('url')
+      $('.article-pdf-toggle').text('PDF verbergen')
       $('.article-pdf').html('<div class="embed-container embed-pdf"><embed class="iframe-pdf" src="' + url + '" type="application/pdf"></div>')
     } else {
+      $('.article-pdf-toggle').text('Toon originele PDF')
       $('.article-pdf').html('')
     }
     // Save setting
