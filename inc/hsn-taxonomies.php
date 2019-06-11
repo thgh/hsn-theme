@@ -117,18 +117,18 @@ function bijdrage_attributes_meta_box( $post ) {
   }
 }
 
-class taxonomies_terms
+class bijdrage_taxonomies
 {
     public function __construct()
     {
         $base = 'bijdrage-taxonomies';
         register_rest_route('hsn-theme', '/' . $base, array(
             'methods' => 'GET',
-            'callback' => array($this, 'get_taxonomies_terms'),
+            'callback' => array($this, 'get_bijdrage_taxonomies'),
         ));
     }
 
-    public function get_taxonomies_terms($object)
+    public function get_bijdrage_taxonomies($object)
     {
         $return = array();
         // $return['categories'] = get_terms('category');
@@ -162,8 +162,82 @@ class taxonomies_terms
     }
 }
 
+class bijdrage_redirect
+{
+    public function __construct()
+    {
+        register_rest_route('hsn-theme', '/bijdrage-at-page', [
+            'methods' => 'GET',
+            'callback' => [$this, 'get_bijdrage_redirect'],
+        ]);
+    }
+
+    public function get_bijdrage_redirect($object)
+    {
+        $return = [];
+        $not = isset($_GET['not']) ? $_GET['not'] : '';
+        $year = isset($_GET['year']) ? $_GET['year'] : '';
+        $target = isset($_GET['target']) ? $_GET['target'] : 'next';
+        $parent = isset($_GET['parent']) ? $_GET['parent'] : '';
+        $pagina = isset($_GET['pagina']) ? $_GET['pagina'] : '';
+        $next = $target == 'next';
+
+        if (empty($parent) && !empty($year)) {
+            getParentByYear();
+        }
+
+        $posts = get_posts([
+            'numberposts' => 4,
+            'post_type'   => 'bijdrage',
+            'post_parent' => $parent,
+            'orderby'     => 'meta_value_num',
+            'order'       => $next ? 'ASC' : 'DESC',
+            'meta_key'    => 'page_first',
+            'meta_query'  => [
+                'relation' => 'AND',
+                [
+                    'key'     => 'page_first',
+                    'compare' => $next ? '>=' : '<=',
+                    'value'   => $pagina,
+                    'type'    => 'numeric',
+                ],
+            ],
+        ]);
+        // Don't show current article
+        $posts = array_values(array_filter($posts, function ($post) use ($not) {
+            return $not != $post->ID;
+        }));
+        $postIds = array_map(function ($post) use ($not) {
+            return get_permalink($post);
+        }, $posts);
+        $postFirst = array_map(function ($post) use ($not) {
+            // return $post->post_parent;
+            return $post->page_first;
+        }, $posts);
+
+        // $article
+        if ($posts[0]) {
+            wp_redirect(get_permalink($posts[0]), 302);
+            exit();   
+        }
+
+        $parentPost = get_post($parent);
+        if (!empty($parentPost))  {
+            wp_redirect(get_permalink($parentPost), 302);
+            exit();
+        }
+        
+        wp_redirect(get_home_url(), 302);
+        exit();
+
+        // $return = compact('year', 'pagina', 'parent', 'postFirst', 'postIds', '_GET', 'object');
+        // return new WP_REST_Response($return, 200);
+    }
+}
+
 add_action('rest_api_init', function () {
-    $taxonomies_terms = new taxonomies_terms;
+    $bijdrage_taxonomies = new bijdrage_taxonomies;
+    $bijdrage_redirect = new bijdrage_redirect;
 });
 
 

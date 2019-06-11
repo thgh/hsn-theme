@@ -104,10 +104,9 @@ foreach ($pages as $key => $page) {
   if ($pos > 0) {
     $contents = substr($contents, $pos + strlen($title));
   }
-  echo '</pre>';
   echo '<div class="textual">';
   // echo '<div class="textual__num">' . $page->page . '</div>';
-  echo '<div class="textual__toggle"><button class=active>Tekst</button><button>Afbeelding</button></div>';
+  // echo '<div class="textual__toggle"><button class=active>Tekst</button><button>Afbeelding</button></div>';
 
   $dom = new DOMDocument;
   @$dom->loadHTML($contents);
@@ -143,6 +142,19 @@ if (!$isScraped) {
 } else {}
 
 ?>
+    <div class="sticky-bottom">
+      <nav class="navigation post-navigation" role="navigation">
+        <h2 class="screen-reader-text">Artikelnavigatie</h2>
+        <div class="nav-links">
+          <div class="nav-previous">
+            <a href="/wp-json/hsn-theme/bijdrage-at-page?pagina=<?php echo $page_first ?>&parent=<?php echo $parent->ID ?>&target=prev&not=<?php echo $post->ID ?>" rel="prev">Vorig artikel</a>
+          </div>
+          <div class="nav-next">
+            <a href="/wp-json/hsn-theme/bijdrage-at-page?pagina=<?php echo $page_last ?>&parent=<?php echo $parent->ID ?>&target=next&not=<?php echo $post->ID ?>" rel="next">Volgend artikel</a>
+          </div>
+        </div>
+      </nav>
+    </div>
   </div><!-- .entry-content -->
 
   <footer class="entry-footer">
