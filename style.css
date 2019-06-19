@@ -1060,9 +1060,29 @@ h2 {
 }
 
 .site-footer {
-	padding: 2em 0;
+	padding: 4em 0 2em;
 	background: #202c4c;
 	color: white;
+	font-size: 13px;
+}
+
+.site-footer a {
+	display: block;
+}
+.site-footer a:focus,
+.site-footer a:hover {
+	color: white;
+	text-decoration: none;
+}
+.site-footer img {
+	width: 70px;
+}
+.site-footer h5 {
+	font-weight: bold;
+	font-size: 16px;
+}
+.media-body {
+	font-size: 13px;
 }
 
 /* Breadcrumb */
