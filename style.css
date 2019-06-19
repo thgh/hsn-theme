@@ -1060,6 +1060,7 @@ h2 {
 }
 
 .site-footer {
+	margin-top: 3em;
 	padding: 4em 0 2em;
 	background: #202c4c;
 	color: white;
@@ -1083,6 +1084,15 @@ h2 {
 }
 .media-body {
 	font-size: 13px;
+}
+.parent {
+  background: #eee;
+}
+.parent img {
+	width: 60px;
+}
+.parent .media-body {
+	padding: 1em;
 }
 
 .error-404 {

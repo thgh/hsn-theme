@@ -9,11 +9,11 @@
 
 $meta = get_post_meta($post->ID);
 $number = $meta['bundelnummer'][0] ?: $post->ID - 1986;
-if (has_post_thumbnail( $post->ID ) ) {
-  $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' )[0];
-} else {
-  $image = false;
-}
+// if (has_post_thumbnail( $post->ID ) ) {
+//   $image = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'single-post-thumbnail' )[0];
+// } else {
+//   $image = false;
+// }
 $year = substr($post->post_date, 0, 4);
 $thumb = get_the_post_thumbnail_url($post->ID, [194, 290]);
 ?>

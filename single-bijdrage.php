@@ -66,8 +66,18 @@ foreach ($taxonomies as $taxonomy => $terms) {
   }
 
 }
+$parentthumb = get_the_post_thumbnail_url($parent->ID, [194, 290]);
           ?>
           </dl>
+          <h2>Dit artikel is onderdeel van</h2>
+          <div class="media parent">
+            <img src="<?php echo $parentthumb ?>" alt="">
+            <div class="media-body">
+              <?php echo $parent->post_title; ?>
+              &middot;
+              <b><?php echo substr($parent->post_date, 0, 4); ?></b>
+            </div>
+          </div>
         </div>
         <div class="col-12 col-md-9">
           <?php
