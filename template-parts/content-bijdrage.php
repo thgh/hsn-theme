@@ -50,14 +50,16 @@ if (!empty($pdfId)) {
 
   <div class="entry-content">
     <p>
-      <?php echo $author ?>
-      &nbsp;&middot;&nbsp;
-      <a href="<?php echo get_permalink($parent) ?>"><?php echo $parent->post_title ?></a>
-      &nbsp;&middot;&nbsp;
-      <?php echo $year ?>
-      &nbsp;&middot;&nbsp;
-      pagina <?php echo $page_first ?>
-      <?php if ($page_last > $page_first) echo ' - ' . $page_last ?>
+
+      <?php
+      $items = array_values(array_filter([
+        $author,
+        empty($post->post_parent) ? false : '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>',
+        $year,
+        empty($page_first) ? false : ('pagina ' . $page_first . ($page_last > $page_first ? ' - ' . $page_last : ''))
+      ]));
+      echo implode(' &nbsp;&middot;&nbsp; ', $items);
+      ?>
     </p>
 
 <?php

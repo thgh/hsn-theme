@@ -8,13 +8,13 @@
  */
 
 get_header();
-$parent = get_post($post->post_parent);
+$parent = empty($post->post_parent) ? null : get_post($post->post_parent);
 ?>
 <div class="breadcrumb-border">
   <nav class="container" aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo get_home_url() ?>">Alle bundels</a></li>
-      <li class="breadcrumb-item"><a href="<?php echo get_permalink($parent) ?>"><?php echo $parent->post_title ?></a></li>
+      <li class="breadcrumb-item"><a href="<?php echo get_permalink($parent) ?>"><?php echo $parent->post_title ?: '?' ?></a></li>
       <li class="breadcrumb-item active" aria-current="page"><?php echo $post->post_title ?></li>
     </ol>
   </nav>
@@ -24,8 +24,6 @@ $parent = get_post($post->post_parent);
     <main id="main" class="site-main container">
       <div class="row">
         <div class="col-12 col-md-3">
-          <h2>Labels</h2>
-          <dl class="labels">
           <?php
   $taxonomyNames = [
     'aantal_respondenten',
@@ -40,7 +38,7 @@ $parent = get_post($post->post_parent);
     'thema',
   ];
 
-
+$taxonomies = [];
 foreach ($taxonomyNames as $taxonomy) {
   // $t = (array) get_taxonomy( $taxonomy );
   $terms = get_object_term_cache( get_post()->ID, $taxonomy);
@@ -55,29 +53,39 @@ foreach ($taxonomyNames as $taxonomy) {
     ];
   }
 }
+
+$out = '';
 foreach ($taxonomies as $taxonomy => $terms) {
-  echo '<dt>' . $taxonomy . '</dt>';
+  $out .= '<dt>' . $taxonomy . '</dt>';
   if (is_array($terms)) {
     foreach ($terms as $term) {
-      echo '<dd>' . $term['name']->name . '</dd>';
+      $out .= '<dd>' . $term['name']->name . '</dd>';
     }
   } else {
     var_dump($terms);
   }
 
 }
-$parentthumb = get_the_post_thumbnail_url($parent->ID, [194, 290]);
-          ?>
-          </dl>
+if (!empty($out)) {
+  ?>
+  <h2>Labels</h2>
+  <dl class="labels"><?php echo $out ?></dl>
+<?php } ?>
+
+<?php if (!empty($parent)) { ?>
           <h2>Dit artikel is onderdeel van</h2>
           <div class="media parent">
-            <img src="<?php echo $parentthumb ?>" alt="">
+            <img src="<?php echo get_the_post_thumbnail_url($parent->ID, [194, 290]) ?>" alt="">
             <div class="media-body">
               <?php echo $parent->post_title; ?>
               &middot;
               <b><?php echo substr($parent->post_date, 0, 4); ?></b>
             </div>
           </div>
+<?php } ?>
+
+
+
         </div>
         <div class="col-12 col-md-9">
           <?php
