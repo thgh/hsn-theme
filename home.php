@@ -88,6 +88,9 @@ get_header();
           <div v-if="hasMore">
             <button class="btn" @click="more">Toon meer resultaten</button>
           </div>
+          <div v-if="!articles.length">
+            <h3>Geen zoekresultaten...</h3>
+          </div>
 
 <!--           <p>
             <button class="btn btn-secondary">Toon meer resultaten</button>

@@ -1085,6 +1085,15 @@ h2 {
 	font-size: 13px;
 }
 
+.error-404 {
+	padding: 20vh 1em 2em;
+	text-align: center;
+}
+.error-404 .widget-area--search{
+	max-width: 300px;
+	margin: 2em auto;
+}
+
 /* Breadcrumb */
 
 .breadcrumb {

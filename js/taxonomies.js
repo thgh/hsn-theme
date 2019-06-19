@@ -4,6 +4,7 @@ Vue.config.devtools = false
 const app = new Vue({
   el: '#main',
   data() {
+    const search = unserialize(window.location.search).q || ''
     const filter = unserialize(window.location.hash)
     return {
       articles: [],
@@ -25,7 +26,7 @@ const app = new Vue({
         respondenten: '',
         tekstsoort: '',
         thema: '',
-        search: '',
+        search,
         ...filter
       }
     }
