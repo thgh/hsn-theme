@@ -1350,6 +1350,7 @@ a .bundel-mini:focus {
 	margin-top: 1.5em;
 	font-size: 14px;
 	user-select: none;
+	background: #f0f0f0;
 }
 @media screen and (max-width: 768px) {
 	.taxonomies {
@@ -1404,11 +1405,11 @@ a .bundel-mini:focus {
 	padding: 0.5em;
 	width: 2.5em;
 	height: 2.5em;
-	background: #f0f0f0;
+	background: none;
 	outline: none;
 }
 .subterm-toggle:hover {
-	background: #ddd;
+	background: rgba(0, 0, 0, .07);
 }
 .subterm-toggle:focus {
 	outline: none;
@@ -1431,11 +1432,11 @@ a .bundel-mini:focus {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	background: #f0f0f0;
+	background: none;
 	color: #24aac5;
 }
 .term__name:hover {
-	background: #ddd;
+	background: rgba(0, 0, 0, .07);
 }
 .term--sub .term__name {
 	padding-left: 3.5em;
@@ -1459,6 +1460,9 @@ a .bundel-mini:focus {
 }
 .term:hover .term__arrow path {
 	fill: black;
+}
+.subterms {
+	background: rgba(0, 0, 0, .07);
 }
 
 /* */
