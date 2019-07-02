@@ -143,16 +143,17 @@ if (!$isScraped) {
   }
 } else {}
 
+$baseUrl = esc_url( home_url( '/wp-json/hsn-theme/bijdrage-at-page' ) );
 ?>
     <div class="sticky-bottom">
       <nav class="navigation post-navigation" role="navigation">
         <h2 class="screen-reader-text">Artikelnavigatie</h2>
         <div class="nav-links">
           <div class="nav-previous">
-            <a href="/wp-json/hsn-theme/bijdrage-at-page?pagina=<?php echo $page_first ?>&parent=<?php echo $parent->ID ?>&target=prev&not=<?php echo $post->ID ?>" rel="prev">Vorig artikel</a>
+            <a href="<?php echo $baseUrl ?>?pagina=<?php echo $page_first ?>&parent=<?php echo $parent->ID ?>&target=prev&not=<?php echo $post->ID ?>" rel="prev">Vorig artikel</a>
           </div>
           <div class="nav-next">
-            <a href="/wp-json/hsn-theme/bijdrage-at-page?pagina=<?php echo $page_last ?>&parent=<?php echo $parent->ID ?>&target=next&not=<?php echo $post->ID ?>" rel="next">Volgend artikel</a>
+            <a href="<?php echo $baseUrl ?>?pagina=<?php echo $page_last ?>&parent=<?php echo $parent->ID ?>&target=next&not=<?php echo $post->ID ?>" rel="next">Volgend artikel</a>
           </div>
         </div>
       </nav>
