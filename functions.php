@@ -1,5 +1,15 @@
 <?php
 add_filter('show_admin_bar', '__return_false');
+add_action( 'admin_bar_menu', 'remove_wp_nodes', 999 );
+
+function remove_wp_nodes() 
+{
+    global $wp_admin_bar;   
+    $wp_admin_bar->remove_node( 'new-page' );
+    $wp_admin_bar->remove_node( 'new-post' );
+    $wp_admin_bar->remove_node( 'new-link' );
+    $wp_admin_bar->remove_node( 'new-media' );
+}
 
 /**
  * hsn-theme functions and definitions
