@@ -46,20 +46,34 @@ foreach ($taxonomyNames as $taxonomy) {
     $terms = wp_get_object_terms( get_post()->ID, $taxonomy);
   }
   foreach ( $terms as $term ) {
-    $taxonomies[$term->taxonomy][] = [
-      'group' => $term->taxonomy,
-      'link' => esc_attr(get_term_link($term)),
-      'name' => $term,
-    ];
+    if (empty($term->parent)) {
+      $taxonomies[$term->taxonomy][$term->term_id]['name'] = $term->name;
+    } else {
+      $taxonomies[$term->taxonomy][$term->parent]['children'][] = $term->name;
+    }
+  }
+  // Check if root terms are present
+  foreach ( $taxonomies as $taxonomy => $parent_terms ) {
+    foreach ( $parent_terms as $term_id => $parent_term ) {
+      if (empty($parent_term['name'])) {
+        $term = get_term( $term_id);
+        $taxonomies[$taxonomy][$term_id]['name'] = $term->name;
+      }
+    }
   }
 }
 
 $out = '';
-foreach ($taxonomies as $taxonomy => $terms) {
+foreach ($taxonomies as $taxonomy => $parent_terms) {
   $out .= '<dt>' . $taxonomy . '</dt>';
-  if (is_array($terms)) {
-    foreach ($terms as $term) {
-      $out .= '<dd>' . $term['name']->name . '</dd>';
+  if (is_array($parent_terms)) {
+    foreach ($parent_terms as $term_id => $parent_term) {
+      $out .= '<dd>' . $parent_term['name'] . '</dd>';
+      if (!empty($parent_term['children'])) {
+        foreach ($parent_term['children'] as $name) {
+          $out .= '<dd class="label-child">' . $name . '</dd>';
+        }
+      }
     }
   } else {
     var_dump($terms);

@@ -1556,6 +1556,10 @@ a .bundel-mini:focus {
 	line-height: 24px;
 	color: #24aac5;
 }
+.labels .label-child {
+	margin-top: -5px;
+	padding-left: 22px;
+}
 
 /* Article detail > pdf */
 
