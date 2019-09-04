@@ -65,7 +65,9 @@ if (!empty($pdfId)) {
             ?>
             <a href="<?php echo esc_url(get_permalink()) ?>" class="text-decoration-none">
               <article class="article-mini">
-                <span class="article-mini__num"><?php echo $first ?? '-' ?></span>
+                <?php if ($first > 1): ?>
+                  <span class="article-mini__num"><?php echo $first ?? '-' ?></span>
+                <?php endif?>
                 <h3><?php the_title(); ?></h3>
                 <p><?php echo $author ?? '-' ?></p>
               </article>
