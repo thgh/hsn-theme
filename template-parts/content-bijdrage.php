@@ -9,8 +9,13 @@
 global $parent;
 $author = get_post_meta($post->ID, 'auteur', true);
 $title = $post->post_title;
+$hasContent = strlen($post->post_content) > 10;
 $page_first = (int) get_post_meta($post->ID, 'page_first', true);
 $page_last =(int)  get_post_meta($post->ID, 'page_last', true);
+$articlePDF =(int)  get_post_meta($post->ID, 'pdf', true);
+if (!empty($articlePDF)) {
+  $articlePDFurl = wp_get_attachment_url($articlePDF);
+}
 
 $year = get_post_meta($parent->ID, 'year', true);
 $pdfId = get_post_meta($parent->ID, 'pdf', true);
@@ -19,8 +24,8 @@ if (!empty($pdfId)) {
   $pdf = get_post($pdfId);
   $pageOffset = (int) get_post_meta($parent->ID, 'page_offset', true);
   $offset = $pageOffset;
-  $pdfUrl = $pdf->guid . '#page=' . ($offset + $page_first);
-  // var_dump($pdfUrl);
+  $bundelPDFurl = $pdf->guid . '#page=' . ($offset + $page_first);
+  // var_dump($bundelPDFurl);
   // var_dump($offset);
   // var_dump($pageOffset);
 }
@@ -50,7 +55,6 @@ if (!empty($pdfId)) {
 
   <div class="entry-content">
     <p>
-
       <?php
       $items = array_values(array_filter([
         $author,
@@ -81,67 +85,92 @@ $isbn = get_post_meta($parent->ID, 'isbn', true);
     )
   );
 
-if (count($pages) && isset($pdfUrl)) {
-  // var_dump($isbn);
-  // var_dump($page_first);
-  // var_dump($page_last);
+if (!empty($bundelPDFurl) || !empty($articlePDF)) {
   ?>
-    <p>
-      <button class="btn article-pdf-toggle" onclick="togglePDF()">Toon originele PDF</button>
+    <p class="downloads">
+      <?php if (!empty($articlePDFurl)): ?>
+        <a class="download-pdf article-pdf-toggle" target="_blank" download href=<?php echo json_encode($articlePDFurl) ?>><b>Download artikel</b></a>
+      <?php elseif (!empty($bundelPDFurl)): ?>
+        <a class="download-pdf article-pdf-toggle" target="_blank" download href=<?php echo json_encode($bundelPDFurl) ?>><b>Download bundel</b></a>
+      <?php endif ?>
+      <?php hsn_theme_entry_footer(); ?>
     </p>
-    <div class="article-pdf" data-url=<?php echo json_encode($pdfUrl) ?>></div>
+  <?php
+} else {
+  hsn_theme_entry_footer();
+}
+
+
+$isContentRendered = false;
+
+// 1. post_content
+if ($hasContent) {
+  the_content();
+  $isContentRendered = true;
+}
+
+// 2. post->pdf
+if (!$isContentRendered && !empty($articlePDFurl)) {
+  ?>
+      <div class="embed-container embed-pdf">
+        <embed class="iframe-pdf" src="<?php echo $articlePDFurl ?>" type="application/pdf">
+      </div>
+  <?php
+  $isContentRendered = true;
+}
+
+// 3. pdf scrape
+if (!$isContentRendered) {
+  $rendered = [];
+  $prevPage = 'first';
+  foreach ($pages as $key => $page) {
+    if (in_array($page->page, $rendered)) {
+      continue;
+    }
+    array_push($rendered, $page->page);
+    $contents = $page->contents;
+    $pos = strpos($contents, $title);
+    if ($pos > 0) {
+      $contents = substr($contents, $pos + strlen($title));
+    }
+    echo '<div class="textual">';
+    // echo '<div class="textual__num">' . $page->page . '</div>';
+    // echo '<div class="textual__toggle"><button class=active>Tekst</button><button>Afbeelding</button></div>';
+
+    $dom = new DOMDocument;
+    @$dom->loadHTML($contents);
+    $xpath = new DOMXPath($dom);
+    $nodes = $xpath->query('//@*');
+    foreach ($nodes as $node) {
+        $node->parentNode->removeAttribute($node->nodeName);
+    }
+    echo $dom->saveHTML();
+    // echo $contents;
+    // echo strip_tags($contents, '<p>');
+    echo '</div>';
+    $isContentRendered = true;
+  }
+}
+
+// 4. bundel pdf
+if (!$isContentRendered && isset($pdf)) {
+  ?>
+  <p>
+    Dit artikel komt voor in onderstaande bundel:
+  </p>
+    <div class="embed-container embed-pdf">
+      <embed class="iframe-pdf" src="<?php echo $bundelPDFurl ?>" type="application/pdf">
+    </div>
+  <?php
+  $isContentRendered = true;
+} else {
+  ?>
+  <p>
+    Dit artikel is niet beschikbaar.
+  </p>
   <?php
 }
 
-$rendered = [];
-$isScraped = false;
-$prevPage = 'first';
-foreach ($pages as $key => $page) {
-  if (in_array($page->page, $rendered)) {
-    continue;
-  }
-  array_push($rendered, $page->page);
-  $contents = $page->contents;
-  $pos = strpos($contents, $title);
-  if ($pos > 0) {
-    $contents = substr($contents, $pos + strlen($title));
-  }
-  echo '<div class="textual">';
-  // echo '<div class="textual__num">' . $page->page . '</div>';
-  // echo '<div class="textual__toggle"><button class=active>Tekst</button><button>Afbeelding</button></div>';
-
-  $dom = new DOMDocument;
-  @$dom->loadHTML($contents);
-  $xpath = new DOMXPath($dom);
-  $nodes = $xpath->query('//@*');
-  foreach ($nodes as $node) {
-      $node->parentNode->removeAttribute($node->nodeName);
-  }
-  echo $dom->saveHTML();
-  // echo $contents;
-  // echo strip_tags($contents, '<p>');
-  echo '</div>';
-  $isScraped = true;
-}
-
-if (!$isScraped) {
-  if (isset($pdf)) {
-    ?>
-    <p>
-      Dit artikel is alleen in PDF beschikbaar.
-    </p>
-      <div class="embed-container embed-pdf">
-        <embed class="iframe-pdf" src="<?php echo $pdfUrl ?>" type="application/pdf">
-      </div>
-    <?php
-  } else {
-    ?>
-    <p>
-      Dit artikel is niet beschikbaar.
-    </p>
-    <?php
-  }
-} else {}
 
 $baseUrl = esc_url( home_url( '/wp-json/hsn-theme/bijdrage-at-page' ) );
 ?>
@@ -163,24 +192,3 @@ $baseUrl = esc_url( home_url( '/wp-json/hsn-theme/bijdrage-at-page' ) );
   <footer class="entry-footer">
   </footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
-
-<script>
-  function togglePDF(onload) {
-    window.pdfToggle = !window.pdfToggle
-    if (window.pdfToggle) {
-      var url = $('.article-pdf').data('url')
-      $('.article-pdf-toggle').text('PDF verbergen')
-      $('.article-pdf').html('<div class="embed-container embed-pdf"><embed class="iframe-pdf" src="' + url + '" type="application/pdf"></div>')
-    } else {
-      $('.article-pdf-toggle').text('Toon originele PDF')
-      $('.article-pdf').html('')
-    }
-    // Save setting
-    if (!onload) {
-      localStorage.hsnPreferPDF = window.pdfToggle ? 'true' : ''
-    }
-  }
-  try {
-    if (localStorage.hsnPreferPDF) togglePDF(true)
-  } catch(e){}
-</script>
