@@ -88,14 +88,14 @@ if (!empty($out)) {
 
 <?php if (!empty($parent)) { ?>
           <h2>Dit artikel is onderdeel van</h2>
-          <div class="media parent">
+          <a class="media parent" href="<?php echo esc_url(get_permalink($parent->ID)) ?>">
             <img src="<?php echo get_the_post_thumbnail_url($parent->ID, [194, 290]) ?>" alt="">
             <div class="media-body">
               <?php echo $parent->post_title; ?>
               &middot;
               <b><?php echo substr($parent->post_date, 0, 4); ?></b>
             </div>
-          </div>
+          </a>
 <?php } ?>
 
 

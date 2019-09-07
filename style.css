@@ -1085,8 +1085,10 @@ h2 {
 .media-body {
 	font-size: 13px;
 }
+.parent:visited,
 .parent {
   background: #eee;
+  color: inherit;
 }
 .parent img {
 	width: 60px;
