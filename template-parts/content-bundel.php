@@ -14,7 +14,7 @@ if (!empty($pdfId)) {
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
   <div class="row">
-    <div class="col-12 col-md-3 pt-4 d-none d-md-block">
+    <div class="col-12 col-md-3 pt-4 d-none d-md-block single-bundel-aside">
       <?php
       get_template_part( 'template-parts/bundel-mini', get_post_type() );
       ?>

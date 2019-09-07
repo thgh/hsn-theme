@@ -1627,9 +1627,45 @@ a .bundel-mini:focus {
 	margin-left: 1em;
 }
 
+.entry-content h2 {
+	font-size: 1.25em;
+	margin-top: 1em;
+	margin-bottom: .5em;
+	font-weight: 500;
+}
+
+.entry-content h3 {
+	font-size: 1.25em;
+	margin-top: 1em;
+	margin-bottom: .5em;
+	font-weight: bold;
+}
+
 /* Vue */
 
 .main-navigation,
 [v-cloak] {
 	display: none !important;
+}
+
+@media print {
+	.breadcrumb-border,
+	.single-bijdrage-aside,
+	.single-bundel-aside,
+	.downloads,
+	.site-footer,
+	.post-navigation {
+		display: none!important;
+	}
+	.site-main>article>.row,
+	.site-main>.row {
+		display: block;
+	}
+	.site-main>article>.row>.col-12,
+	.site-main>.row>.col-12 {
+		max-width: 100%;
+	}
+	.site-footer {
+
+	}
 }

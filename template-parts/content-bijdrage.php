@@ -163,7 +163,9 @@ if (!$isContentRendered && isset($pdf)) {
     </div>
   <?php
   $isContentRendered = true;
-} else {
+}
+
+if (!$isContentRendered) {
   ?>
   <p>
     Dit artikel is niet beschikbaar.

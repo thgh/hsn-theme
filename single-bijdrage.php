@@ -23,7 +23,7 @@ $parent = empty($post->post_parent) ? null : get_post($post->post_parent);
   <div id="primary" class="content-area">
     <main id="main" class="site-main container">
       <div class="row">
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-3 single-bijdrage-aside">
           <?php
   $taxonomyNames = [
     'aantal_respondenten',
