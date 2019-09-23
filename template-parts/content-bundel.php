@@ -6,6 +6,7 @@
  *
  * @package hsn-theme
  */
+$pageOffset = (int) get_post_meta($post->ID, 'page_offset', true);
 $pdfId = get_post_meta($post->ID, 'pdf', true);
 if (!empty($pdfId)) {
   $pdf = get_post($pdfId);
@@ -65,8 +66,8 @@ if (!empty($pdfId)) {
             ?>
             <a href="<?php echo esc_url(get_permalink()) ?>" class="text-decoration-none">
               <article class="article-mini">
-                <?php if ($first > 1): ?>
-                  <span class="article-mini__num"><?php echo $first ?? '-' ?></span>
+                <?php if (!empty(intval($first))): ?>
+                  <span class="article-mini__num"><?php echo roman2($first, $pageOffset) ?></span>
                 <?php endif?>
                 <h3><?php the_title(); ?></h3>
                 <p><?php echo $author ?? '-' ?></p>
