@@ -19,11 +19,10 @@ if (!empty($articlePDF)) {
 
 $year = get_post_meta($parent->ID, 'year', true);
 $pdfId = get_post_meta($parent->ID, 'pdf', true);
-$offset = 36;
+$pageOffset = (int) get_post_meta($parent->ID, 'page_offset', true);
+$offset = $pageOffset ?? 36;
 if (!empty($pdfId)) {
   $pdf = get_post($pdfId);
-  $pageOffset = (int) get_post_meta($parent->ID, 'page_offset', true);
-  $offset = $pageOffset;
   $bundelPDFurl = $pdf->guid . '#page=' . ($offset + $page_first);
   // var_dump($bundelPDFurl);
   // var_dump($offset);
@@ -60,7 +59,7 @@ if (!empty($pdfId)) {
         $author,
         empty($post->post_parent) ? false : '<a href="' . get_permalink($parent) . '">' . $parent->post_title . '</a>',
         $year,
-        empty($page_first) ? false : ('pagina ' . $page_first . ($page_last > $page_first ? ' - ' . $page_last : ''))
+        empty($page_first) ? false : ('pagina ' . roman2($page_first, $offset) . ($page_last > $page_first ? ' - ' . roman2($page_last, $offset) : ''))
       ]));
       echo implode(' &nbsp;&middot;&nbsp; ', $items);
       ?>
