@@ -1082,6 +1082,13 @@ h2 {
 	font-weight: bold;
 	font-size: 16px;
 }
+.site-footer .media {
+	display: flex;
+	color: inherit;
+}
+.site-footer a.media:hover h5 {
+	text-decoration: underline;
+}
 .media-body {
 	font-size: 13px;
 }
@@ -1096,6 +1103,24 @@ h2 {
 .parent .media-body {
 	padding: 1em;
 }
+
+.icon {
+	display: inline-block;
+  vertical-align: middle;
+	border-radius: 15px;
+	width: 30px;
+	height: 30px;
+	padding: 6px;
+	background: #24aac5
+}
+.icon>svg {
+	display: block;
+	fill: white;
+	width: 18px;
+	height: 18px;
+}
+
+
 
 .error-404 {
 	padding: 20vh 1em 2em;
