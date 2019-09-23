@@ -47,11 +47,13 @@ const app = new Vue({
       }
       this.articles = await wpFetch('wp/v2/bijdrage?' + this.filtering)
     },
+    async loadMore() {
+      const offset = '&offset=' + this.articles.length
+      const page = await wpFetch('wp/v2/bijdrage?' + this.filtering + offset)
+      page.forEach(a => this.articles.push(a))
+    },
     onFocus() {
       this.searchFocus = true
-    },
-    more() {
-      alert('todo')
     }
   },
   async mounted() {
