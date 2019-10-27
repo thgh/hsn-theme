@@ -35,7 +35,7 @@ function roman($number) {
     return $returnValue;
 }
 function roman2($value, $offset) {
-  if ($value < 0) {
+  if ($value < 1) {
     return roman(intval($offset) + intval($value));
   }
   return $value;
