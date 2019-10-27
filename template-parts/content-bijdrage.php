@@ -13,8 +13,12 @@ $hasContent = strlen($post->post_content) > 10;
 $page_first = (int) get_post_meta($post->ID, 'page_first', true);
 $page_last =(int)  get_post_meta($post->ID, 'page_last', true);
 $articlePDF =(int)  get_post_meta($post->ID, 'pdf', true);
+$bundelnummer = intval(get_post_meta($parent->ID, 'bundelnummer', true));
 if (!empty($articlePDF)) {
   $articlePDFurl = wp_get_attachment_url($articlePDF);
+}
+if (empty($articlePDFurl) && intval($post->ID) < 1355) {
+  $articlePDFurl = home_url( '/wp-content/legacy/' . $bundelnummer . '/hsnbundel-' . $bundelnummer . '_' . $post->ID . '.pdf' );
 }
 
 $year = get_post_meta($parent->ID, 'year', true);
@@ -88,9 +92,9 @@ if (!empty($bundelPDFurl) || !empty($articlePDF)) {
   ?>
     <p class="downloads">
       <?php if (!empty($articlePDFurl)): ?>
-        <a class="download-pdf article-pdf-toggle" target="_blank" download href=<?php echo json_encode($articlePDFurl) ?>><b>Download artikel</b></a>
+        <a class="download-pdf article-pdf-toggle" target="_blank" download href="<?php echo esc_url($articlePDFurl) ?>"><b>Download artikel</b></a>
       <?php elseif (!empty($bundelPDFurl)): ?>
-        <a class="download-pdf article-pdf-toggle" target="_blank" download href=<?php echo json_encode($bundelPDFurl) ?>><b>Download bundel</b></a>
+        <a class="download-pdf article-pdf-toggle" target="_blank" download href="<?php echo esc_url($bundelPDFurl) ?>"><b>Download bundel</b></a>
       <?php endif ?>
       <?php hsn_theme_entry_footer(); ?>
     </p>
@@ -112,7 +116,7 @@ if ($hasContent) {
 if (!$isContentRendered && !empty($articlePDFurl)) {
   ?>
       <div class="embed-container embed-pdf">
-        <embed class="iframe-pdf" src="<?php echo $articlePDFurl ?>" type="application/pdf">
+        <embed class="iframe-pdf" src="<?php echo esc_url($articlePDFurl) ?>" type="application/pdf">
       </div>
   <?php
   $isContentRendered = true;
