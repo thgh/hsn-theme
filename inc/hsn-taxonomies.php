@@ -117,6 +117,36 @@ function bijdrage_attributes_meta_box( $post ) {
   }
 }
 
+class homepage_search
+{
+    public function __construct()
+    {
+        $base = 'homepage-search';
+        register_rest_route('hsn-theme', '/homepage-search', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'get_homepage_search'),
+        ));
+    }
+
+    public function get_homepage_search($object)
+    {
+        $postIds = explode(',', $_GET['posts'] ?: '2090,2078');
+        $postIds = array_map('intval', $postIds);
+
+        global $wpdb;
+        $query = "
+          SELECT post.ID as id, meta.meta_value as bundelnummer
+          FROM ".$wpdb->prefix."posts post
+          INNER JOIN ".$wpdb->prefix."posts parent ON post.post_parent = parent.ID
+          INNER JOIN ".$wpdb->prefix."postmeta meta ON meta.post_id = parent.ID
+          WHERE post.ID IN (" . implode(',', $postIds) . ")
+          AND meta.meta_key = 'bundelnummer'";
+ 
+        $nummers = $wpdb->get_results($query);
+        return new WP_REST_Response($nummers, 200);
+    }
+}
+
 class bijdrage_taxonomies
 {
     public function __construct()
@@ -130,7 +160,7 @@ class bijdrage_taxonomies
 
     public function get_bijdrage_taxonomies($object)
     {
-        $return = array();
+        $return = [];
         // $return['categories'] = get_terms('category');
  //        $return['tags'] = get_terms('post_tag');
         // Get taxonomies
@@ -238,6 +268,7 @@ class bijdrage_redirect
 add_action('rest_api_init', function () {
     $bijdrage_taxonomies = new bijdrage_taxonomies;
     $bijdrage_redirect = new bijdrage_redirect;
+    $homepage_search = new homepage_search;
 });
 
 

@@ -1334,6 +1334,23 @@ a .bundel-mini:focus {
 	background-color: #ffffff;
 	color: #56af89;
 }
+.article-mini__bundel {
+	float: left;
+  margin-top: 1px;
+	border-radius: 1px;
+	padding: 2px 6px;
+	height: 22px;
+	line-height: 18px;
+	font-size: 13px;
+	font-style: normal;
+	font-stretch: normal;
+	text-align: center;
+	background-color: #fff;
+	color: #999;
+}
+.article-mini .ml-82 {
+	margin-left: 76px;
+}
 
 /* Bundel detail > next-prev */
 
@@ -1512,6 +1529,10 @@ a .bundel-mini:focus {
 
 .results {
 	margin-bottom: 3em;
+}
+
+.results h3 {
+	margin-bottom: 4px;
 }
 
 /* widget area*/

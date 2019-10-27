@@ -78,9 +78,11 @@ get_header();
           <div class="results">
             <a :href="article.link" class="text-decoration-none" v-for="article in articles">
               <article class="article-mini">
-                <span class="article-mini__num" v-if="filter.bundel">{{ article.page_first || '' }}</span>
                 <h3 v-html="article.title.rendered"></h3>
-                <p>{{ article.auteur || '' }}</p>
+                <span class="article-mini__bundel">Bundel <b>{{numberLookup[article.id] || '...'}}</b></span>
+                <p class="ml-82">
+                  {{ article.auteur || '' }}
+                </p>
                 <p v-if="articles.length === 1"></p>
               </article>
             </a>

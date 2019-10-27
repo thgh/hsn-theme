@@ -9,6 +9,8 @@ const app = new Vue({
     return {
       articles: [],
       lookup: {},
+      numberLookup: {},
+      numberLoading: [],
       searchFocus: false,
       filter: {
         category: '',
@@ -46,11 +48,22 @@ const app = new Vue({
         return
       }
       this.articles = await wpFetch('wp/v2/bijdrage?' + this.filtering)
+      this.loadNumbers(this.articles.map(a => a.id))
     },
     async loadMore() {
       const offset = '&offset=' + this.articles.length
       const page = await wpFetch('wp/v2/bijdrage?' + this.filtering + offset)
       page.forEach(a => this.articles.push(a))
+    },
+    async loadNumbers(ids) {
+      const toLoad = ids.filter(id => !this.numberLoading.includes(id))
+      if (!toLoad.length) {
+        return
+      }
+      this.numberLoading = this.numberLoading.concat(toLoad)
+      const numbers = await wpFetch('hsn-theme/homepage-search?posts=' + toLoad)
+      numbers.forEach(num => this.numberLookup[num.id] = num.bundelnummer)
+      this.numberLookup = Object.assign({}, this.numberLookup)
     },
     onFocus() {
       this.searchFocus = true
@@ -58,7 +71,7 @@ const app = new Vue({
   },
   async mounted() {
     if (window.location.hash.length > 4) {
-      this.search()
+      // this.search()
     }
     const d = await wpFetch('hsn-theme/bijdrage-taxonomies')
     if (!d || !d.forEach) {
