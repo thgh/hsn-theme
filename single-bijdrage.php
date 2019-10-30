@@ -23,7 +23,16 @@ $parent = empty($post->post_parent) ? null : get_post($post->post_parent);
   <div id="primary" class="content-area">
     <main id="main" class="site-main container">
       <div class="row">
-        <div class="col-12 col-md-3 single-bijdrage-aside">
+        <div class="col-12 col-md-9 order-md-2">
+          <?php
+          while ( have_posts() ) :
+            the_post();
+
+            get_template_part( 'template-parts/content', get_post_type() );
+          endwhile; // End of the loop.
+          ?>
+        </div>
+        <div class="col-12 col-md-3 order-md-1 single-bijdrage-aside">
           <?php
   $taxonomyNames = [
     'aantal_respondenten',
@@ -87,7 +96,8 @@ if (!empty($out)) {
 <?php } ?>
 
 <?php if (!empty($parent)) { ?>
-          <h2>Dit artikel is onderdeel van</h2>
+          <h2 class="d-md-none d-lg-block">Dit artikel is onderdeel van</h2>
+          <h2 class="d-none d-md-block d-lg-none">Onderdeel van</h2>
           <a class="media parent" href="<?php echo esc_url(get_permalink($parent->ID)) ?>">
             <img src="<?php echo get_the_post_thumbnail_url($parent->ID, [194, 290]) ?>" alt="">
             <div class="media-body">
@@ -100,15 +110,6 @@ if (!empty($out)) {
 
 
 
-        </div>
-        <div class="col-12 col-md-9">
-          <?php
-          while ( have_posts() ) :
-            the_post();
-
-            get_template_part( 'template-parts/content', get_post_type() );
-          endwhile; // End of the loop.
-          ?>
         </div>
       </div>
 
