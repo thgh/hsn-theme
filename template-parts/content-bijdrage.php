@@ -17,7 +17,9 @@ $bundelnummer = intval(get_post_meta($parent->ID, 'bundelnummer', true));
 if (!empty($articlePDF)) {
   $articlePDFurl = wp_get_attachment_url($articlePDF);
 }
-if (empty($articlePDFurl) && intval($post->ID) < 1355) {
+
+// Load legacy pdf's
+if (empty($articlePDFurl) && intval($post->ID) < 1355 && $bundelnummer != 17) {
   $articlePDFurl = home_url( '/wp-content/legacy/' . $bundelnummer . '/hsnbundel-' . $bundelnummer . '_' . $post->ID . '.pdf' );
 }
 
