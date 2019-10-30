@@ -106,11 +106,16 @@ const app = new Vue({
       deep: true,
       handler(s, o) {
         this.search()
-        window.history.replaceState(
-          this.filter,
-          '',
-          '#' + serialize(this.filter)
-        )
+
+        const old = String(window.location.hash).replace('#', '')
+        const query = serialize(this.filter)
+        if (old !== query) {
+          window.history.replaceState(
+            this.filter,
+            '',
+            query ? '#' + query : ''
+          )
+        }
       }
     },
     lookup: {
@@ -180,7 +185,7 @@ function serialize(obj) {
 function unserialize(str) {
   const query = str[0] === '#' || str[0] === '?' ? str.slice(1) : str
   const result = {}
-  query.split('&').forEach(part => {
+  query.split('&').filter(Boolean).forEach(part => {
     const item = part.split('=')
     result[decodeURIComponent(item[0])] = decodeURIComponent(item[1])
   })
