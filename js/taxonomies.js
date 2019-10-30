@@ -54,6 +54,7 @@ const app = new Vue({
       const offset = '&offset=' + this.articles.length
       const page = await wpFetch('wp/v2/bijdrage?' + this.filtering + offset)
       page.forEach(a => this.articles.push(a))
+      this.loadNumbers(page.map(a => a.id))
     },
     async loadNumbers(ids) {
       const toLoad = ids.filter(id => !this.numberLoading.includes(id))
