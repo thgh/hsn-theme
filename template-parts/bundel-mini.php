@@ -14,7 +14,7 @@ $number = $meta['bundelnummer'][0] ?: $post->ID - 1986;
 // } else {
 //   $image = false;
 // }
-$year = substr($post->post_date, 0, 4);
+$year = $meta['year'][0] ?: substr($post->post_date, 0, 4);
 $thumb = get_the_post_thumbnail_url($post->ID, [194, 290]);
 ?>
 <div class="cover">

@@ -93,7 +93,7 @@ if (!empty($out)) {
             <div class="media-body">
               <?php echo $parent->post_title; ?>
               &middot;
-              <b><?php echo substr($parent->post_date, 0, 4); ?></b>
+              <b><?php echo get_post_meta($parent->ID, 'year', true) ?: substr($parent->post_date, 0, 4); ?></b>
             </div>
           </a>
 <?php } ?>
