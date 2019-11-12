@@ -118,7 +118,7 @@ if ($hasContent) {
 if (!$isContentRendered && !empty($articlePDFurl)) {
   ?>
       <div class="embed-container embed-pdf">
-        <embed class="iframe-pdf" src="<?php echo esc_url($articlePDFurl) ?>" type="application/pdf">
+        <embed class="iframe-pdf" type="application/pdf" src="<?php echo esc_url($articlePDFurl) ?>" type="application/pdf">
       </div>
   <?php
   $isContentRendered = true;
@@ -164,7 +164,7 @@ if (!$isContentRendered && isset($pdf)) {
     Dit artikel komt voor in onderstaande bundel:
   </p>
     <div class="embed-container embed-pdf">
-      <embed class="iframe-pdf" src="<?php echo $bundelPDFurl ?>" type="application/pdf">
+      <embed class="iframe-pdf" type="application/pdf" src="<?php echo $bundelPDFurl ?>" type="application/pdf">
     </div>
   <?php
   $isContentRendered = true;
