@@ -82,7 +82,7 @@ if (!empty($pdfId)) {
           <p><?php esc_html_e( 'De bijdrages in deze bundel zijn niet afzonderlijk beschikbaar.' ); ?></p>
           <?php if (isset($pdf)): ?>
             <div class="embed-container embed-pdf">
-              <embed class="iframe-pdf" src="<?php echo $pdf->guid; ?>" type="application/pdf">
+              <embed class="iframe-pdf" type="application/pdf" src="<?php echo $pdf->guid; ?>" type="application/pdf">
             </div>
           <?php endif; ?>
         <?php endif; ?>
