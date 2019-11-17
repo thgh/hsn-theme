@@ -9,7 +9,6 @@
 global $parent;
 $author = get_post_meta($post->ID, 'auteur', true);
 $title = $post->post_title;
-$hasContent = strlen($post->post_content) > 10;
 $page_first = (int) get_post_meta($post->ID, 'page_first', true);
 $page_last =(int)  get_post_meta($post->ID, 'page_last', true);
 $articlePDF =(int)  get_post_meta($post->ID, 'pdf', true);
@@ -34,6 +33,40 @@ if (!empty($pdfId)) {
   // var_dump($offset);
   // var_dump($pageOffset);
 }
+
+function renderPDFcontents($pages, $classname) {
+  $rendered = [];
+  foreach ($pages as $key => $page) {
+    if (in_array($page->page, $rendered)) {
+      continue;
+    }
+    array_push($rendered, $page->page);
+    $contents = $page->contents;
+    $pos = strpos($contents, $title);
+    if ($pos > 0) {
+      $contents = substr($contents, $pos + strlen($title));
+    }
+    echo '<div class="' . $classname . '">';
+    // echo '<div class="textual__num">' . $page->page . '</div>';
+    // echo '<div class="textual__toggle"><button class=active>Tekst</button><button>Afbeelding</button></div>';
+
+    $dom = new DOMDocument;
+    @$dom->loadHTML($contents);
+    $xpath = new DOMXPath($dom);
+    $nodes = $xpath->query('//@*');
+    foreach ($nodes as $node) {
+        $node->parentNode->removeAttribute($node->nodeName);
+    }
+    echo $dom->saveHTML();
+    // echo $contents;
+    // echo strip_tags($contents, '<p>');
+    echo '</div>';
+    $isContentRendered = true;
+  }
+
+  return count($rendered);
+}
+
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -105,11 +138,22 @@ if (!empty($bundelPDFurl) || !empty($articlePDF)) {
   hsn_theme_entry_footer();
 }
 
+function contentful($value='')
+{
+  $start = strpos($value, '<!--##');
+  $end = strpos($value, '##-->');
+  $value = substr($value, 0, $start) . substr($value, $end + 5);
+  $legacy = strpos($value, '[legacy_import]');
+  if ($legacy !== false) {
+    return $legacy > 10;
+  }
+  return strlen($value) > 20;
+}
 
 $isContentRendered = false;
 
 // 1. post_content
-if ($hasContent) {
+if (contentful($post->post_content)) {
   the_content();
   $isContentRendered = true;
 }
@@ -121,40 +165,13 @@ if (!$isContentRendered && !empty($articlePDFurl)) {
         <embed class="iframe-pdf" type="application/pdf" src="<?php echo esc_url($articlePDFurl) ?>" type="application/pdf">
       </div>
   <?php
+  renderPDFcontents($pages, 'pdf-contents');
   $isContentRendered = true;
 }
 
 // 3. pdf scrape
 if (!$isContentRendered) {
-  $rendered = [];
-  $prevPage = 'first';
-  foreach ($pages as $key => $page) {
-    if (in_array($page->page, $rendered)) {
-      continue;
-    }
-    array_push($rendered, $page->page);
-    $contents = $page->contents;
-    $pos = strpos($contents, $title);
-    if ($pos > 0) {
-      $contents = substr($contents, $pos + strlen($title));
-    }
-    echo '<div class="textual">';
-    // echo '<div class="textual__num">' . $page->page . '</div>';
-    // echo '<div class="textual__toggle"><button class=active>Tekst</button><button>Afbeelding</button></div>';
-
-    $dom = new DOMDocument;
-    @$dom->loadHTML($contents);
-    $xpath = new DOMXPath($dom);
-    $nodes = $xpath->query('//@*');
-    foreach ($nodes as $node) {
-        $node->parentNode->removeAttribute($node->nodeName);
-    }
-    echo $dom->saveHTML();
-    // echo $contents;
-    // echo strip_tags($contents, '<p>');
-    echo '</div>';
-    $isContentRendered = true;
-  }
+  $isContentRendered = !!renderPDFcontents($pages, 'textual');
 }
 
 // 4. bundel pdf

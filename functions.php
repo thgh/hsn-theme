@@ -179,6 +179,7 @@ add_action( 'wp_enqueue_scripts', 'hsn_theme_scripts' );
  */
 require get_template_directory() . '/inc/disable-emojis.php';
 require get_template_directory() . '/inc/hsn-taxonomies.php';
+require get_template_directory() . '/inc/hsn-migrate.php';
 
 /**
  * Implement the Custom Header feature.

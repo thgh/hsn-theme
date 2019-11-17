@@ -1611,6 +1611,9 @@ a .bundel-mini:focus {
 
 /* Article detail > pdf */
 
+.pdf-contents {
+	display: none;
+}
 .textual {
 	position: relative;
 	background: #fff;
