@@ -1406,7 +1406,7 @@ a .bundel-mini:focus {
 	user-select: none;
 	background: #f0f0f0;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
 	.taxonomies {
 		display: none;
 	}
