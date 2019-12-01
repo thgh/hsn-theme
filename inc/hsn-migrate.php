@@ -86,7 +86,7 @@ function includeAuthorInContent($author, $content) {
   } else if ($legacy !== false) {
     $content = str_replace(
       '[legacy_import]',
-      '<!--##' . $author . '##-->' . PHP_EOL . PHP_EOL . '[legacy_import]',
+      '<!--##' . $author . '##-->' . '[legacy_import]',
       $content
     );
   } else {

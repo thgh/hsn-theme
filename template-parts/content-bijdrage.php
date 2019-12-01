@@ -144,10 +144,7 @@ function contentful($value='')
   $end = strpos($value, '##-->');
   $value = substr($value, 0, $start) . substr($value, $end + 5);
   $legacy = strpos($value, '[legacy_import]');
-  if ($legacy !== false) {
-    return $legacy > 10;
-  }
-  return strlen($value) > 20;
+  return $legacy === false && strlen($value) > 20;
 }
 
 $isContentRendered = false;
