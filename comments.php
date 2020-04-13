@@ -7,7 +7,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package hsn-theme
+ * @package onderwijstermen
  */
 
 /*

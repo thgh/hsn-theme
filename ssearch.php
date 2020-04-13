@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
  *
- * @package hsn-theme
+ * @package onderwijstermen
  */
 
 get_header();

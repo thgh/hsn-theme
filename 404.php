@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Creating_an_Error_404_Page
  *
- * @package hsn-theme
+ * @package onderwijstermen
  */
 
 get_header();
@@ -17,16 +17,11 @@ get_header();
 				<header class="page-header">
 					<h1 class="page-title"><?php esc_html_e( 'Oeps! Deze pagina kunnen we niet vinden.', 'hsn-theme' ); ?></h1>
 				</header><!-- .page-header -->
-
-				<div class="page-content">
-					<p>
-						<a href="/">Ga naar de homepage</a>
-					</p>
-					<?php get_sidebar('search'); ?>
-				</div><!-- .page-content -->
 			</section><!-- .error-404 -->
 
 		</main><!-- #main -->
+
+		<?php get_sidebar('search'); ?>
 	</div><!-- #primary -->
 
 <?php

@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package hsn-theme
+ * @package onderwijstermen
  */
 $pageOffset = (int) get_post_meta($post->ID, 'page_offset', true);
 $pdfId = get_post_meta($post->ID, 'pdf', true);

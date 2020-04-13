@@ -6,12 +6,16 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package hsn-theme
+ * @package onderwijstermen
  */
 
 ?>
 
 	</div><!-- #content -->
+
+	<div class="container">
+		<h3>Mist u een term?</h3>
+	</div>
 
 	<footer id="colophon" class="site-footer">
 		<div class="container">
